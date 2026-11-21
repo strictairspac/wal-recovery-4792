@@ -1,2 +1,2 @@
 ROLES = ('admin', 'operator', 'viewer')
-DRILL_STATUSES = ('queued', 'running', 'completed', 'failed')
+DRILL_STATUSES = ('queued', 'running', 'pending', 'completed', 'failed')

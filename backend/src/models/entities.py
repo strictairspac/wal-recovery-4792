@@ -32,6 +32,24 @@ class Recovery(Base):
     snapshot: Mapped[dict]=mapped_column(JSON)
     result: Mapped[dict | None]=mapped_column(JSON,nullable=True)
     created_at: Mapped[datetime]=mapped_column(DateTime,default=now)
+class TransferCase(Base):
+    __tablename__='transfer_cases'
+    id: Mapped[int]=mapped_column(primary_key=True)
+    name: Mapped[str]=mapped_column(String(100),unique=True)
+    decision: Mapped[str]=mapped_column(String(10))
+    decision_durable: Mapped[bool]=mapped_column()
+    participants: Mapped[list]=mapped_column(JSON)
+    description: Mapped[str]=mapped_column(String(500))
+class TransferRun(Base):
+    __tablename__='transfer_runs'
+    id: Mapped[int]=mapped_column(primary_key=True)
+    transfer_case_id: Mapped[int]=mapped_column(ForeignKey('transfer_cases.id'))
+    label: Mapped[str]=mapped_column(String(120))
+    status: Mapped[str]=mapped_column(String(20),default='queued')
+    snapshot: Mapped[dict]=mapped_column(JSON)
+    state: Mapped[dict | None]=mapped_column(JSON,nullable=True)
+    result: Mapped[dict | None]=mapped_column(JSON,nullable=True)
+    created_at: Mapped[datetime]=mapped_column(DateTime,default=now)
 class Audit(Base):
     __tablename__='audits'
     id: Mapped[int]=mapped_column(primary_key=True)
